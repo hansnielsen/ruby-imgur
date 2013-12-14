@@ -29,4 +29,15 @@ class Imgur::Client::Account < Imgur::Model
     data = connection.get_notifications.body('data')
     connection.notifications.load(data)
   end
+
+  def stats
+    path = "/account/me/stats"
+    data = connection.get_account_stats(path: path).body["data"]
+
+    top_images = connection.images.load(data["top_images"])
+    top_albums = connection.albums.load(data["top_albums"])
+    top_gallery_comments = connection.comments.load(data["top_gallery_comments"])
+
+    Imgur::Client::AccountStats.new(data, top_images, top_albums, top_gallery_comments)
+  end
 end
