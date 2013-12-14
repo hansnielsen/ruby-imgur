@@ -121,8 +121,11 @@ class Imgur::Client < Cistern::Service
                      @connection[path].delete(headers)
                    end
       rescue RestClient::Forbidden => e
-        self.refresh_token
-        retry
+        if e.http_body =~ /The access token provided has expired/
+          self.refresh_token
+          retry
+        end
+        raise
       end
       parsed_body    = response.strip.empty? ? {} : parser.load(response)
       status         = parsed_body.delete("status")
