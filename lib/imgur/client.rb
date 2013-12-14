@@ -1,5 +1,5 @@
 class Imgur::Client < Cistern::Service
-  @recognized_arguments = [:config, :config_path]
+  @recognized_arguments = [:config, :config_path, :url, :logger]
   model_path "imgur/models"
   request_path "imgur/requests"
 
