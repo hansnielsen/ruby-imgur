@@ -31,8 +31,7 @@ class Imgur::Client::Account < Imgur::Model
   end
 
   def stats
-    path = "/account/#{url}/stats"
-    data = connection.get_account_stats(path: path).body["data"]
+    data = connection.get_account_stats(url: url).body["data"]
 
     top_images = connection.images.load(data["top_images"])
     top_albums = connection.albums.load(data["top_albums"])
@@ -42,8 +41,7 @@ class Imgur::Client::Account < Imgur::Model
   end
 
   def settings
-    path = "/account/#{url}/settings"
-    data = connection.get_account_settings(path: path).body["data"]
+    data = connection.get_account_settings(url: url).body["data"]
     Imgur::Client::AccountSettings.new(data)
   end
 end

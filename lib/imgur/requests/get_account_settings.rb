@@ -1,7 +1,7 @@
 class Imgur::Client
   class Real
     def get_account_settings(params={})
-      path = params[:path]
+      path = "/account/#{params[:url]}/settings"
       request(
         :method => :get,
         :path   => path,
