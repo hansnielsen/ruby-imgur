@@ -40,4 +40,10 @@ class Imgur::Client::Account < Imgur::Model
 
     Imgur::Client::AccountStats.new(data, top_images, top_albums, top_gallery_comments)
   end
+
+  def settings
+    path = "/account/#{url}/settings"
+    data = connection.get_account_settings(path: path).body["data"]
+    Imgur::Client::AccountSettings.new(data)
+  end
 end
