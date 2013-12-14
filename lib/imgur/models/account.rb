@@ -11,7 +11,7 @@ class Imgur::Client::Account < Imgur::Model
     image_array = []
     page = 0
     until data.count > 0 && data.count != 50
-      path = "/account/me/images/#{page}"
+      path = "/account/#{url}/images/#{page}"
       data = connection.get_images(path: path).body["data"]
       data.each { |i| image_array << i }
       page += 1
@@ -20,7 +20,7 @@ class Imgur::Client::Account < Imgur::Model
   end
 
   def albums
-    path = "/account/me/albums"
+    path = "/account/#{url}/albums"
     data = connection.get_albums(path: path).body["data"]
     connection.albums.load(data)
   end
@@ -31,7 +31,7 @@ class Imgur::Client::Account < Imgur::Model
   end
 
   def stats
-    path = "/account/me/stats"
+    path = "/account/#{url}/stats"
     data = connection.get_account_stats(path: path).body["data"]
 
     top_images = connection.images.load(data["top_images"])

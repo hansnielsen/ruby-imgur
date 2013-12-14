@@ -10,8 +10,13 @@ class Imgur::Client::Accounts < Cistern::Collection
   collection_root "data"
   collection_request :get_accounts
 
+  def by_url(url)
+    options = {:path => "/account/#{url}"}
+    all(options).first
+  end
+
   def all(options={})
-    path = "/account/me"
+    path = options[:path] || "/account/me"
 
     data = connection.get_accounts(path: path).body["data"]
     connection.accounts.load([data])
